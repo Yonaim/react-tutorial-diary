@@ -10,14 +10,14 @@ const MountTest = () => {
 	return <div>what the fuck</div>
 };
 
-// useEffect 함수는 두번째 인자값이 변할때마다 첫번째 인자로 전달한 콜백 함수를 실행한다
 const LifeCycle = () => {
 	
 	const [count, setCount] = useState(0);
 	const [isVisible, setIsVisible] = useState(false);
-
+	
 	const toggle = () => {setIsVisible(!isVisible)};
-
+	
+	// useEffect 함수는 두번째 인자값이 변할때마다 첫번째 인자로 전달한 콜백 함수를 실행한다
 	// 빈 배열을 전달하면 컴포넌트가 처음 마운트될때만 실행됨
 	useEffect(() => {
 		console.log("mount !!");

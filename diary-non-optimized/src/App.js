@@ -84,29 +84,11 @@ const App = () => {
 	};
 
 	// App 컴포넌트가 리렌더링될때마다 다시 실행됨 (memoization 미적용)
-	// const getDiaryAnalysis = () => {
-		// console.log("일기 통계를 위한 계산 들어갑니다~")
-	// 	return { goodCount: 0, badCount: 1, goodRatio: 50};
-	// };
-	// const { goodCount, badCount, goodRatio } = getDiaryAnalysis();
-
-	// memoization 적용 - data가 변할 때만 재실행됨
-	// 의존 배열에 data.length가 아니라 data가 들어가야한다고 warning을 띄워주긴 하는데 의도상 이게 맞음ㅇㅇ
-	const getDiaryAnalysis = useMemo(() => {
+	const getDiaryAnalysis = () => {
 		console.log("일기 통계를 위한 계산 들어갑니다~")
-		console.log(data.length);
-		if (data.length === 0) {
-			return { goodcount: 0, badCount: 0, goodRatio: 0 };
-		}
-
-		const goodCount = data.filter((it) => it.emotion >= 3).length;
-		const badCount = data.length - goodCount;
-		const goodRatio = (goodCount / data.length) * 100.0;
-		
-		return { goodCount, badCount, goodRatio };
-	}, [data.length]);
-	const { goodCount, badCount, goodRatio } = getDiaryAnalysis;
-
+		return { goodCount: 0, badCount: 1, goodRatio: 50};
+	};
+	const { goodCount, badCount, goodRatio } = getDiaryAnalysis();
 
 	return (
 		<div className="App">
