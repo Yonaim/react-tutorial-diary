@@ -1,9 +1,10 @@
-import { memo, useState, useRef } from "react";
+import { memo, useState, useRef, useContext } from "react";
+import { DiaryDispatchContext } from "./App";
 
-const DiaryEditor = ({ onCreate }) => {
-
+const DiaryEditor = () => {
+	// useContext 훅을 사용해 컨텍스트로부터 값을 갖고옴
+	const { onCreate } = useContext(DiaryDispatchContext);
 	const authorInput = useRef();
-
 	const [state, setState] = useState({
 		author: "",
 		content: "",

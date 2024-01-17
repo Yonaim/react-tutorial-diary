@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
+import { createContext, useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 import LifeCycle from "./LifeCycle";
+
+export const DiaryStateContext = createContext(null);
+export const DiaryDispatchContext = createContext(null);
 
 const diary_list_reducer = (state, action) => {
 	switch (action.type) {
@@ -54,7 +57,6 @@ const App = () => {
 		});
 		dispatch({ type: "INIT", data: initData });
 	};
-
 	// 초기 데이터를 가져오는 함수 'getData'를 컴포넌트가 처음 마운트될때 실행
 	useEffect(() => {
 		setTimeout(() => {
@@ -62,6 +64,7 @@ const App = () => {
 		}, 1000);
 	}, []);
 
+	// 처음 렌더링된 이후로 재생성될 필요가 없으므로 useCallback으로 최적화
 	const onCreate = useCallback((author, content, emotion) => {
 		dispatch({
 			type: "CREATE",
@@ -69,14 +72,16 @@ const App = () => {
 		});
 		dataId.current += 1;
 	}, []);
-
-	// 처음 렌더링된 이후로 재생성될 필요가 없으므로 useCallback으로 최적화
 	const onRemove = useCallback((targetId) => {
 		dispatch({ type: "REMOVE", targetId });
 	}, []);
-
 	const onEdit = useCallback((targetId, newContent) => {
 		dispatch({ type: "EDIT", targetId, newContent});
+	}, []);
+
+	// App 컴포넌트가 처음 렌더링되었을때 생성하고 저장해 그대로 사용하면 되므로 useMemo로 저장
+	const memoizedDispatch = useMemo(() => {
+		return { onCreate, onRemove, onEdit };
 	}, []);
 
 	// memoization 적용 - data가 변할 때만 재실행됨
@@ -98,15 +103,19 @@ const App = () => {
 
 
 	return (
-		<div className="App">
-			<LifeCycle />
-			<DiaryEditor onCreate={onCreate}/>
-			<div>전체 일기 : {data.length}</div>
-			<div>기분 좋은 일기 개수 : {goodCount}</div>
-			<div>기분 나쁜 일기 개수 : {badCount}</div>
-			<div>기분 좋은 일기 비율 : {goodRatio}</div>
-			<DiaryList onEdit={onEdit} onRemove={onRemove} diaryList={data}/>
-		</div>
+		<DiaryStateContext.Provider value={data}>
+			<DiaryDispatchContext.Provider value={memoizedDispatch}>
+				<div className="App">
+					<LifeCycle />
+					<DiaryEditor />
+					<div>전체 일기 : {data.length}</div>
+					<div>기분 좋은 일기 개수 : {goodCount}</div>
+					<div>기분 나쁜 일기 개수 : {badCount}</div>
+					<div>기분 좋은 일기 비율 : {goodRatio}</div>
+					<DiaryList />
+				</div>			
+			</DiaryDispatchContext.Provider>
+		</DiaryStateContext.Provider>
 	);
 };
 
