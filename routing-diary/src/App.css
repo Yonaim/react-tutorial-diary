@@ -1,0 +1,9 @@
+.App {
+  padding: 20px;
+}
+
+.App nav {
+  color: blue;
+  text-decoration: underline;
+  cursor: grab;
+}
