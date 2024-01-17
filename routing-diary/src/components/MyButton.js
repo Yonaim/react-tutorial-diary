@@ -5,7 +5,7 @@ const MyButton = ({ text, type, onClick }) => {
 
 	return (
 		// css에서 class name은 공백 기준으로 분리되어 생각되어짐
-		<button className={["MyButton", `MyButton_${type}`].join(" ")} onClick={onClick}>
+		<button className={["MyButton", `MyButton_${btnType}`].join(" ")} onClick={onClick}>
 			{text}
 		</button>
 	);
