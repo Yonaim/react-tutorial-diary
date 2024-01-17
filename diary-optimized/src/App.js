@@ -45,21 +45,21 @@ const App = () => {
 			id: dataId.current
 		};
 		dataId.current += 1;
+		// 함수형 업데이트 (콜백 함수를 인자로 받아 최신 데이터로 업데이트)
 		setData((data) => [newItem, ...data]);
 	}, []);
 	// 	setData([newItem, ...data]);
 	// }, [data]);
 
-	const onRemove = (targetId) => {
-		const newDiaryList = data.filter((it) => it.id !== targetId);
-		setData(newDiaryList);
-	};
+	// 처음 렌더링된 이후로 재생성될 필요가 없으므로 useCallback으로 최적화
+	const onRemove = useCallback((targetId) => {
+		setData((data) => data.filter((it) => it.id !== targetId));
+	}, []);
 
-	const onEdit = (targetId, newContent) => {
-		setData(
-			data.map((it) => it.id === targetId ? { ...it, content:newContent } : it)
+	const onEdit = useCallback((targetId, newContent) => {
+		setData((data) => data.map((it) => it.id === targetId ? { ...it, content:newContent } : it)
 		);
-	};
+	}, []);
 
 	// memoization 적용 - data가 변할 때만 재실행됨
 	// 의존 배열에 data.length가 아니라 data가 들어가야한다고 warning을 띄워주긴 하는데 의도상 이게 맞음ㅇㅇ
