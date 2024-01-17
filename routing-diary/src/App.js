@@ -38,21 +38,57 @@ const reducer = (state, action) => {
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
+const dummyData = [
+	{
+		id: 1,
+		emotion: 1,
+		content: "오늘의 일기 1번",
+		date: 1705488011578,
+	},
+	{
+		id: 2,
+		emotion: 2,
+		content: "오늘의 일기 2번",
+		date: 1705488011579,
+	},
+	{
+		id: 3,
+		emotion: 3,
+		content: "오늘의 일기 3번",
+		date: 1705488011580,
+	},
+	{
+		id: 4,
+		emotion: 4,
+		content: "오늘의 일기 4번",
+		date: 1705488011581,
+	},
+	{
+		id: 5,
+		emotion: 5,
+		content: "오늘의 일기 5번",
+		date: 1705488011582,
+	},
+	{
+		id: 6,
+		emotion: 6,
+		content: "오늘의 일기 6번",
+		date: 1805488011583,
+	},
+];
+
 function App() {
-	const [data, dispatch] = useReducer(reducer, []);
+	const [data, dispatch] = useReducer(reducer, dummyData);
 	
 	const dataId = useRef(0); // 렌더링과 상관없는 값이므로 ref 사용
 	
-	// CREATE
 	const onCreate = (date, content, emotion) => {
 		dispatch({type:"CREATE", data:{id: dataId, date: new Date(date).getTime(), content, emotion}});
 		dataId.current += 1;
 	}
-	// REMOVE
 	const onRemove = (targetId) => {
 		dispatch({type:"REMOVE", targetId});
 	}
-	// EDIT
 	const onEdit = (targetId, date, content, emotion) => {
 		dispatch({type:"EDIT", data:{id: targetId, date: new Date(date).getTime(), content, emotion}});
 	}
@@ -67,11 +103,6 @@ function App() {
 
 				{/* process.env.PUBLIC_URL 값이 제대로 들어있지 않은 문제 해결 필요 */}
 				{/* <img src={process.env.PUBLIC_URL + `/assets/emoticon1.png`}/> */}
-				
-				<MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} type={"positive"}/>
-				<MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} type={"negative"}/>
-				<MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} />
-				<MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} type={"unknown"}/>
 
 				<RoutesNavi />
 				<Routes>
