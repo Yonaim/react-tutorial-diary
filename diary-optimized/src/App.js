@@ -1,12 +1,40 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 import LifeCycle from "./LifeCycle";
 
+const diary_list_reducer = (state, action) => {
+	switch (action.type) {
+		case "INIT": {
+			return (action.data);
+		}
+		case "CREATE": {
+			const created_date = new Date().getTime();
+			const newItem = {
+				...action.data,
+				created_date
+			};
+			return [newItem, ...state];
+		}
+		case "REMOVE": {
+			console.log("????");
+			return state.filter((it) => it.id !== action.targetId);
+		}
+		case "EDIT": {
+			return state.map((it) => it.id === action.targetId ? {
+				...it, content: action.newContent
+			} : it);
+		}
+		default:
+			return state;
+	}
+}
+
 const App = () => {
 
-	const [data, setData] = useState([]);
+	// state 'data'를 관리하는 로직을 별도의 함수 reducer로 분리
+	const [data, dispatch] = useReducer(diary_list_reducer, []);
 	const dataId = useRef(0);
 
 	// 초기 데이터를 가져오는 함수
@@ -24,7 +52,7 @@ const App = () => {
 				id: dataId.current++,
 			};
 		});
-		setData(initData);
+		dispatch({ type: "INIT", data: initData });
 	};
 
 	// 초기 데이터를 가져오는 함수 'getData'를 컴포넌트가 처음 마운트될때 실행
@@ -34,38 +62,27 @@ const App = () => {
 		}, 1000);
 	}, []);
 
-	// 새로운 일기가 생성될때 실행하는 함수
 	const onCreate = useCallback((author, content, emotion) => {
-		const created_date = new Date().getTime();
-		const newItem = {
-			author,
-			content,
-			emotion,
-			created_date,
-			id: dataId.current
-		};
+		dispatch({
+			type: "CREATE",
+			data: { author, content, emotion, id: dataId.current }
+		});
 		dataId.current += 1;
-		// 함수형 업데이트 (콜백 함수를 인자로 받아 최신 데이터로 업데이트)
-		setData((data) => [newItem, ...data]);
 	}, []);
-	// 	setData([newItem, ...data]);
-	// }, [data]);
 
 	// 처음 렌더링된 이후로 재생성될 필요가 없으므로 useCallback으로 최적화
 	const onRemove = useCallback((targetId) => {
-		setData((data) => data.filter((it) => it.id !== targetId));
+		dispatch({ type: "REMOVE", targetId });
 	}, []);
 
 	const onEdit = useCallback((targetId, newContent) => {
-		setData((data) => data.map((it) => it.id === targetId ? { ...it, content:newContent } : it)
-		);
+		dispatch({ type: "EDIT", targetId, newContent});
 	}, []);
 
 	// memoization 적용 - data가 변할 때만 재실행됨
 	// 의존 배열에 data.length가 아니라 data가 들어가야한다고 warning을 띄워주긴 하는데 의도상 이게 맞음ㅇㅇ
 	// 근데 경고메세지가 너무 거슬리니까 일단 data로 함
 	const getDiaryAnalysis = useMemo(() => {
-		// console.log("일기 통계를 위한 계산 들어갑니다~")
 		if (data.length === 0) {
 			return { goodcount: 0, badCount: 0, goodRatio: 0 };
 		}
