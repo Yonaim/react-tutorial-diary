@@ -5,14 +5,32 @@ import Home from "./pages/Home";
 import Edit from "./pages/Edit";
 import New from "./pages/New";
 import Diary from "./pages/Diary";
-import RoutesNavi from './components/RoutesNavi';
 
-function App_useLibrary() {
-  return (
-    <BrowserRouter>
-      <div className="App">
+// components
+import MyButton from './components/MyButton';
+import RoutesNavi from './components/RoutesNavi';
+import MyHeader from './components/MyHeader';
+
+function App() {
+	
+	return (
+		<BrowserRouter>
+    	<div className="App">
         <h1>-------- Yonazzang's Diary -------- </h1>
-      	<RoutesNavi />
+      	<MyHeader headText={"헤더텍스트"}
+		leftChild={<MyButton text={"왼쪽버튼"} onClick={() => {alert("왼쪽 버튼 클릭")}}/>}
+		rightChild={<MyButton text={"오른쪽버튼"} onClick={() => {alert("오른쪽 버튼 클릭")}}/>}
+		/>
+
+		{/* process.env.PUBLIC_URL 값이 제대로 들어있지 않은 문제 해결 필요 */}
+		{/* <img src={process.env.PUBLIC_URL + `/assets/emoticon1.png`}/> */}
+		
+		<MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} type={"positive"}/>
+		<MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} type={"negative"}/>
+		<MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} />
+		<MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} type={"unknown"}/>
+
+		<RoutesNavi />
         <Routes>
 			<Route path="/" element={<Home />}/>
 			<Route path="/edit" element={<Edit />}/>
@@ -28,4 +46,4 @@ function App_useLibrary() {
   );
 }
 
-export default App_useLibrary;
+export default App;
