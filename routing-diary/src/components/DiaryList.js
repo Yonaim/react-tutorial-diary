@@ -1,10 +1,13 @@
- import { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import MyButton from "./MyButton";
 
 // 옵션 리스트 및 선택 이벤트 발생시 실행되는 콜백 함수를 받아 메뉴 html을 생성하여 반환하는 컴포넌트
 // 재사용 여지 있을지 별도 파일로 분리하는 것이 좋음
 const ControlMenu = ({ value, onChange, optionList }) => {
 	return (
-		<select value={value} onChange={(e) => {onChange(e.target.value)}}>
+		<select className="ControlMenu" value={value} onChange={(e) => {onChange(e.target.value)}}>
 			{optionList.map((it, idx) => 
 				<option key={idx} value={it.value}>
 					{it.name}
@@ -67,10 +70,20 @@ const DiaryList = ({ diaryList }) => {
 		return (sortedAndFilteredList);
 	};
 
+	const navigate = useNavigate();
+
 	return (
-	<div>
-		<ControlMenu value={sortType} onChange={setSortType} optionList={sortOptionList}/>
-		<ControlMenu value={filterType} onChange={setFilterType} optionList={filterOptionList}/>
+	<div className="DiaryList">
+		<div className="menu_wrapper">
+			<div className="left_col">
+				<ControlMenu value={sortType} onChange={setSortType} optionList={sortOptionList}/>
+				<ControlMenu value={filterType} onChange={setFilterType} optionList={filterOptionList}/>
+			</div>
+			<div className="right_col">
+				<MyButton type="positive" text="새 일기 쓰기" onClick={() => navigate("/new")} />
+			</div>
+		</div>
+
 		{/* DiaryList 컴포넌트가 리렌더링될 때*/}
 		{getProcessedDiaryList().map((it) => (
 			<div key={it.id}>{it.content}</div>
