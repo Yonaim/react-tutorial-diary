@@ -38,7 +38,7 @@ const getStringDate = (date) => {
 	return date.toISOString().slice(0, 10);
 };
 
-const DiaryEditor = (isEdit, originData) => {
+const DiaryEditor = ({ isEdit, originData }) => {
 	const [date, setDate] = useState(getStringDate(new Date()));
 	const [content, setContent] = useState("");
 	const contentRef = useRef();
