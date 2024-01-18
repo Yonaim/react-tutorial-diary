@@ -15,17 +15,18 @@ const Edit = () => {
 	// id값이나 다이어리 데이터가 바뀌었을 때만 재실행
 	useEffect(() => {
 		if (diaryList.length >= 1) {
-			const targetDiary = diaryList.find(
+		  const targetDiary = diaryList.find(
 				// parseInt는 혹시모를 오류를 위한 보험
-				(it) => parseInt(it.id) === parseInt(id)
-			);
-			if (targetDiary) {
-				setOriginData(targetDiary);
-			} else {
-				navigate("/", {replace: true});
-			}
+			(it) => parseInt(it.id) === parseInt(id)
+		  );
+		  if (targetDiary) {
+			setOriginData(targetDiary);
+		  } else {
+			alert("존재하지 않는 일기입니다");
+			navigate("/", { replace: true });
+		  }
 		}
-	}, [id, diaryList])
+	  }, [id, diaryList]);
 
 	return (
 		<div>
