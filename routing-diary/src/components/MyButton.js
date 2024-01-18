@@ -1,3 +1,5 @@
+import React from "react";
+
 const MyButton = ({ text, type, onClick }) => {
 
 	// 전달된 type이 정의되지 않은 type인 경우를 고려
@@ -15,4 +17,4 @@ MyButton.defaultProps = {
 	type: "default"
 };
 
-export default MyButton;
+export default React.memo(MyButton);
