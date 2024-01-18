@@ -83,7 +83,7 @@ function App() {
 	const dataId = useRef(0); // 렌더링과 상관없는 값이므로 ref 사용
 	
 	const onCreate = (date, content, emotion) => {
-		dispatch({type:"CREATE", data:{id: dataId, date: new Date(date).getTime(), content, emotion}});
+		dispatch({type:"CREATE", data:{id: dataId.current, date: new Date(date).getTime(), content, emotion}});
 		dataId.current += 1;
 	}
 	const onRemove = (targetId) => {
