@@ -43,7 +43,6 @@ function App() {
 	const [data, dispatch] = useReducer(reducer, []);
 	
 	useEffect(() => {
-		console.log("what");
 		const localData = localStorage.getItem("savedDiary");
 		if (localData) {
 			// 가장 큰 id를 갖고오기 위해 id 내림차순으로 정렬
@@ -54,7 +53,6 @@ function App() {
 	}, []);
 	// 자바스크립트에서는 선언문이 먼저 처리되어지므로(호이스팅) dataId가 여기서 선언되어도 문제가 없음
 	const dataId = useRef(0); // 렌더링과 상관없는 값이므로 ref 사용
-	console.log(dataId);
 
 	const onCreate = (date, content, emotion) => {
 		dispatch({type:"CREATE", data:{id: dataId.current, date: new Date(date).getTime(), content, emotion}});
