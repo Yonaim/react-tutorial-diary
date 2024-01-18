@@ -21,7 +21,7 @@ const reducer = (state, action) => {
 		case "CREATE":
 			// spread 연산자를 사용하면 1단계까지는 깊은 복사됨 (내부 배열이나 객체는x)
 			const newItem = { ...action.data};
-			newState = {newItem, ...state};
+			newState = [newItem, ...state];
 			break;
 		case "REMOVE":
 			newState = state.filter((it) => it.id !== action.targetId);
