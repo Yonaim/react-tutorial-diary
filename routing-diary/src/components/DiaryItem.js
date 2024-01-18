@@ -6,17 +6,24 @@ const DiaryItem = ({ id, emotion, content, date }) => {
 	const navigate = useNavigate();
 	const strDate = new Date(parseInt(date)).toLocaleDateString();
 
+	const goDetail = () => {
+		navigate(`/diary/${id}`);
+	};
+	const goEdit = () => {
+		navigate(`/edit/${id}`);
+	};
+
 	return (
 		<div className="DiaryItem">
-			<div className={["emotion_img_wrapper", `emotion_img_wrapper_${emotion}`].join(" ")}>
+			<div className={["emotion_img_wrapper", `emotion_img_wrapper_${emotion}`].join(" ")} onClick={goDetail}>
 				<img src={process.env.PUBLIC_URL + `assets/emotion${emotion}.png`}/>
 			</div>
-			<div className="info_wrapper">
+			<div className="info_wrapper" onClick={goDetail}>
 				<div className="diary_date">{strDate}</div>
 				<div className="diary_content_preview">{content}</div>
 			</div>
 			<div>
-				<MyButton text={"수정"} onClick={() => navigate(`/edit/${id}`)}/>
+				<MyButton text={"수정"} onClick={goEdit}/>
 			</div>
 		</div>
 	); 
