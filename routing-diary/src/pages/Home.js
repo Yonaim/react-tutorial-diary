@@ -9,7 +9,7 @@ import DiaryList from "../components/DiaryList";
 const Home = () => {
 
 	const allData = useContext(DiaryStateContext); // 모든 일기데이터
-	
+
 	const [curDate, setCurDate] = useState(new Date());
 	const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
 	const [showData, setShowData] = useState([]); // 실질적으로 화면에 표시할 일기데이터
@@ -17,12 +17,15 @@ const Home = () => {
 	// 현재 날짜 혹은 일기 목록이 바뀔시 리렌더링
 	// 월 단위이므로 현재 날짜가 바뀌는 경우는 월이 바뀌는 경우라 거의 없긴하겠지만 무튼 필요~
 	useEffect(() => {
-		if (allData.length === 0) return ;
-		
-		const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(), 1).getTime();
-		const lastDay = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getTime();
-
-		setShowData(allData.filter((it) => firstDay <= it.date && it.date <= lastDay));
+		// 헐.... allData = undefined로 들어가는 경우가 있어서 안전한 조건문은		
+		// allData.length === 0 -> allData.length > 1 ㅡㅡ;;
+		if (allData.length > 1)
+		{
+			const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(), 1).getTime();
+			const lastDay = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getTime();
+	
+			setShowData(allData.filter((it) => firstDay <= it.date && it.date <= lastDay));
+		}
 	}, [curDate, allData]);
 
 	const increaseMonth = () => {
