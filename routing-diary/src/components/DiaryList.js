@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import MyButton from "./MyButton";
@@ -6,7 +6,7 @@ import DiaryItem from "./DiaryItem";
 
 // 옵션 리스트 및 선택 이벤트 발생시 실행되는 콜백 함수를 받아 메뉴 html을 생성하여 반환하는 컴포넌트
 // 다른 컴포넌트에서 재사용 여지 있을시 별도 파일로 분리하는 것이 좋음
-const ControlMenu = ({ value, onChange, optionList }) => {
+const ControlMenu = React.memo(({ value, onChange, optionList }) => {
 	return (
 		<select className="ControlMenu" value={value} onChange={(e) => {onChange(e.target.value)}}>
 			{optionList.map((it, idx) => 
@@ -16,7 +16,7 @@ const ControlMenu = ({ value, onChange, optionList }) => {
 			)}
 		</select>
 	);
-};
+});
 
 const sortOptionList = [
 	{
@@ -77,6 +77,7 @@ const DiaryList = ({ diaryList }) => {
 	<div className="DiaryList">
 		<div className="menu_wrapper">
 			<div className="left_col">
+				{/* 상태 변화함수 setSortType, setFilterType는 이 컴포넌트가 리렌더링되도 다시 생성되지 않는다  */}
 				<ControlMenu value={sortType} onChange={setSortType} optionList={sortOptionList}/>
 				<ControlMenu value={filterType} onChange={setFilterType} optionList={filterOptionList}/>
 			</div>
