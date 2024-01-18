@@ -5,7 +5,7 @@ import MyButton from "./MyButton";
 import DiaryItem from "./DiaryItem";
 
 // 옵션 리스트 및 선택 이벤트 발생시 실행되는 콜백 함수를 받아 메뉴 html을 생성하여 반환하는 컴포넌트
-// 재사용 여지 있을지 별도 파일로 분리하는 것이 좋음
+// 다른 컴포넌트에서 재사용 여지 있을시 별도 파일로 분리하는 것이 좋음
 const ControlMenu = ({ value, onChange, optionList }) => {
 	return (
 		<select className="ControlMenu" value={value} onChange={(e) => {onChange(e.target.value)}}>
