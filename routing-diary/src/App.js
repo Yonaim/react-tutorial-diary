@@ -1,6 +1,6 @@
 // DEBUG: 다이어리 리스트에 아무것도 없을때 다이어리 생성해도 리스트가 제대로 뜨지 않는 문제 
 
-import { createContext, useReducer, useRef } from 'react';
+import { createContext, useEffect, useReducer, useRef } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -32,56 +32,30 @@ const reducer = (state, action) => {
 		default:
 			return state;
 	}
+	localStorage.setItem("savedDiary", JSON.stringify(newState));
 	return newState;
 };
 
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
-const dummyData = [
-	{
-		id: 1,
-		emotion: 1,
-		content: "오늘의 일기 1번",
-		date: 1705488011578,
-	},
-	{
-		id: 2,
-		emotion: 2,
-		content: "오늘의 일기 2번",
-		date: 1705488011579,
-	},
-	{
-		id: 3,
-		emotion: 3,
-		content: "오늘의 일기 3번",
-		date: 1705488011580,
-	},
-	{
-		id: 4,
-		emotion: 4,
-		content: "오늘의 일기 4번",
-		date: 1705488011581,
-	},
-	{
-		id: 5,
-		emotion: 5,
-		content: "오늘의 일기 5번",
-		date: 1705488011582,
-	},
-	{
-		id: 6,
-		emotion: 6,
-		content: "오늘의 일기 6번",
-		date: 1805488011583,
-	},
-];
-
 function App() {
-	const [data, dispatch] = useReducer(reducer, dummyData);
+	const [data, dispatch] = useReducer(reducer, []);
 	
-	const dataId = useRef(dummyData ? dummyData.length : 0); // 렌더링과 상관없는 값이므로 ref 사용
-	
+	useEffect(() => {
+		console.log("what");
+		const localData = localStorage.getItem("savedDiary");
+		if (localData) {
+			// 가장 큰 id를 갖고오기 위해 id 내림차순으로 정렬
+			const initDiaryData = JSON.parse(localData).sort((a, b) => parseInt(b.id) - parseInt(a.id));
+			dataId.current = initDiaryData[0].id + 1;
+			dispatch({ type: "INIT", data: initDiaryData });
+		};
+	}, []);
+	// 자바스크립트에서는 선언문이 먼저 처리되어지므로(호이스팅) dataId가 여기서 선언되어도 문제가 없음
+	const dataId = useRef(0); // 렌더링과 상관없는 값이므로 ref 사용
+	console.log(dataId);
+
 	const onCreate = (date, content, emotion) => {
 		dispatch({type:"CREATE", data:{id: dataId.current, date: new Date(date).getTime(), content, emotion}});
 		dataId.current += 1;
