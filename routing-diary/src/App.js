@@ -1,3 +1,5 @@
+// DEBUG: 다이어리 리스트에 아무것도 없을때 다이어리 생성해도 리스트가 제대로 뜨지 않는 문제 
+
 import { createContext, useReducer, useRef } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -8,9 +10,7 @@ import New from "./pages/New";
 import Diary from "./pages/Diary";
 
 // components
-import MyButton from './components/MyButton';
 import RoutesNavi from './components/RoutesNavi';
-import MyHeader from './components/MyHeader';
 
 const reducer = (state, action) => {
 	let newState = [];
@@ -80,7 +80,7 @@ const dummyData = [
 function App() {
 	const [data, dispatch] = useReducer(reducer, dummyData);
 	
-	const dataId = useRef(0); // 렌더링과 상관없는 값이므로 ref 사용
+	const dataId = useRef(dummyData ? dummyData.length : 0); // 렌더링과 상관없는 값이므로 ref 사용
 	
 	const onCreate = (date, content, emotion) => {
 		dispatch({type:"CREATE", data:{id: dataId.current, date: new Date(date).getTime(), content, emotion}});
@@ -107,7 +107,7 @@ function App() {
 				<RoutesNavi />
 				<Routes>
 					<Route path="/" element={<Home />}/>
-					<Route path="/edit" element={<Edit />}/>
+					<Route path="/edit/:id" element={<Edit />}/>
 					<Route path="/new" element={<New />}/>
 					<Route path="/diary/:id" element={<Diary />}/>
 					{/* /diary/(id)와 /diary 둘다에 대응하기 위해 보통은 이렇게 예외처리함.  */}
