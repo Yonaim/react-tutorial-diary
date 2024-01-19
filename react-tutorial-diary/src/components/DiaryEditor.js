@@ -24,8 +24,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
 	const handleClickEmotion = useCallback((id) => {
 		setSelectEmotion(id);
 	}, []);
-	const handleSubmit = useCallback(() => {
-		// TODO: content에 아무 글자도 없는 경우 length 메서드 발견되지 않는 문제 해결
+	const handleSubmit = () => {
 		if (content.length < 1) {
 			alert("한 자도 입력 안했잖아~~~~");
 			contentRef.current.focus();
@@ -41,7 +40,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
 			}
 		}
 		navigate("/", {replace: true});
-	}, []);
+	};
 	const handleRemove = useCallback(() => {
 		if (window.confirm("이 일기를 정말 삭제하시겠습니까?")) {
 			onRemove(originData.id);
