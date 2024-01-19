@@ -71,12 +71,8 @@ function App() {
 		<DiaryDispatchContext.Provider value={{onCreate, onEdit, onRemove}}>
 			<BrowserRouter>
 				<div className="App">
-				<h1>-------- Yonazzang's Diary -------- </h1>
-
 				{/* process.env.PUBLIC_URL 값이 제대로 들어있지 않은 문제 해결 필요 */}
 				{/* <img src={process.env.PUBLIC_URL + `/assets/emoticon1.png`}/> */}
-
-				<RoutesNavi />
 				<Routes>
 					<Route path="/" element={<Home />}/>
 					<Route path="/edit/:id" element={<Edit />}/>
