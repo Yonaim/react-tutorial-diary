@@ -38,8 +38,8 @@ const DiaryEditor = ({ isEdit, originData }) => {
 			else {
 				onCreate(date, content, selectEmotion);
 			}
+			navigate("/", {replace: true});
 		}
-		navigate("/", {replace: true});
 	};
 	const handleRemove = useCallback(() => {
 		if (window.confirm("이 일기를 정말 삭제하시겠습니까?")) {
