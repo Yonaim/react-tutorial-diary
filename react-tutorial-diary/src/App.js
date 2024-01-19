@@ -1,5 +1,3 @@
-// DEBUG: 다이어리 리스트에 아무것도 없을때 다이어리 생성해도 리스트가 제대로 뜨지 않는 문제 
-
 import { createContext, useEffect, useReducer, useRef } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';

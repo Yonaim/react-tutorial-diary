@@ -19,7 +19,7 @@ const Home = () => {
 	useEffect(() => {
 		// 헐.... allData = undefined로 들어가는 경우가 있어서 안전한 조건문은		
 		// allData.length === 0 -> allData.length > 1 ㅡㅡ;;
-		if (allData.length > 1)
+		if (allData.length > 0)
 		{
 			const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(), 1).getTime();
 			// 해당 월의 마지막 날 마지막 시간(23:59:59)
