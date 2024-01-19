@@ -26,12 +26,12 @@ const DiaryEditor = ({ isEdit, originData }) => {
 	}, []);
 	const handleSubmit = () => {
 		if (content.length < 1) {
-			alert("한 자도 입력 안했잖아~~~~");
+			alert("일기를 최소 1글자 입력해주세요.");
 			contentRef.current.focus();
 			return ;
 		}
 
-		if (window.confirm(isEdit === true ? "정말 수정하시겠습니까?" : "일기를 생성하시겠습니까")) {
+		if (window.confirm(isEdit === true ? "이 일기를 수정하시겠습니까?" : "일기를 생성하시겠습니까?")) {
 			if (isEdit === true) {
 				onEdit(originData.id, date, content, selectEmotion);
 			}
