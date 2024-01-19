@@ -1,4 +1,4 @@
-React 학습을 위해 Udemy의 [[https://www.udemy.com/course/winterlood-react-basic/|한입 크기로 잘라먹는 리액트]] 강의를 수강하며 작성한 프로젝트입니다.
+React 학습을 위해 Udemy의 [한입 크기로 잘라먹는 리액트](https://www.udemy.com/course/winterlood-react-basic/) 강의를 수강하며 작성한 프로젝트입니다.
 
 1. 프로젝트의 목적  
 2. 최종 컴포넌트 구조  
@@ -8,15 +8,15 @@ React 학습을 위해 Udemy의 [[https://www.udemy.com/course/winterlood-react-
 
 # 1. 프로젝트 소개
 - React를 이용해 구현한 일기 웹사이트
-- [[https://create-react-app.dev/|Create-React-App]] 보일러 틀을 이용해 초기 세팅
+- [Create-React-App](https://create-react-app.dev/) 보일러 틀을 이용해 초기 세팅
 - SPA(Single Page Application), CSR(Client Side Rendering)
-- SPA를 위한 라우팅은 라이브러리 [[https://reactrouter.com/en/main|React-Router]] 사용
+- SPA를 위한 라우팅은 라이브러리 [React-Router](https://reactrouter.com/en/main) 사용
 - 웹 스토리지(Local Storage)에 일기 데이터 저장
 
 최종본에 앞서 3개의 연습 프로젝트가 있는데, 루트의 'practice' 디렉토리에 올려두었다.
 - diary-non-optimized: hook을 익히기 위한 최초의 연습 프로젝트.
 	- 싱글 페이지 (SPA가 아님)
-	- Fake API([[https://jsonplaceholder.typicode.com/|JSONplaceholder]])로부터 json 파일을 받아 띄움
+	- Fake API [JSONplaceholder](https://jsonplaceholder.typicode.com/)로부터 json 파일을 받아 띄움
 - diary-optimized: 앞선 프로젝트를 메모이제이션 hook을 이용해 최적화
 - SPA: 라이브러리 없이 직접 DOM 객체 `window`를 조작하여 SPA를 구현해보고, react-router 라이브러리를 사용할 때와 비교
 
@@ -48,6 +48,7 @@ React 학습을 위해 Udemy의 [[https://www.udemy.com/course/winterlood-react-
 	- 처음 배우는 단계이기에 어쩔 수 없는 것을 알지만, 사후 처리(땜빵질)하는 느낌이었음
 
 # 5. 총평 
-React는 처음 사용해보지만 강의의 도움이 있어 빠르게 작성할 수 있었다.
-강의의 예제를 거의 똑같이 따라했음에도 불구하고 맞닥뜨린 여러 에러들이 있는데 그 원인들은 잘못된 React 사용보다는, 대게 JS 언어 사용의 미숙함이었다.
-다음부터는 이번에 직접 트러블 슈팅을 하며 인지하게된 JS의 여러 특성에 유의하여 최대한 에러가 발생하지 않게끔 처음부터 안전하게 코드를 짜야겠다. 디버깅 힘들다
+React는 처음 사용해보지만 강의의 도움이 있어 빠르게 작성할 수 있었다.  
+강의의 예제를 거의 똑같이 따라했음에도 불구하고 맞닥뜨린 여러 에러들이 있는데 그 원인들은 잘못된 React 사용보다는, 대게 JS 언어 사용의 미숙함이었다.  
+다음부터는 이번에 직접 트러블 슈팅을 하며 인지하게된 JS의 여러 특성에 유의하여 최대한 에러가 발생하지 않게끔 처음부터 안전하게 코드를 짜야겠다.   
+디버깅 힘들다
